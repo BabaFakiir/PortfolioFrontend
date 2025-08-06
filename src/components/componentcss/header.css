@@ -1,0 +1,31 @@
+.heading{
+    font-weight: bold;
+    color: #00C805;
+    text-align: center;
+    margin: 0;
+    font-size: 2xl;
+    padding-top: 20px;
+}
+
+.heading-box{
+    padding-left: auto;
+    padding-right: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    flex: auto;
+    text-align: center;
+}
+
+.log-out-button{
+    background-color: #00C805;
+    color: black;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500; /* font-medium */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
