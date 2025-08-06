@@ -1,0 +1,56 @@
+.App {
+  font-family: Arial, sans-serif;
+  background-color: #000000;
+  min-height: 100vh;
+  color: #FFFFFF;
+}
+
+.subheading{
+    font-weight: semi-bold;
+    color: 'white';
+    text-align: center;
+    margin: 0;
+    font-size: xl;
+    padding-bottom: 20px;
+}
+
+.heading{
+    font-weight: bold;
+    color: #00C805;
+    text-align: center;
+    margin: 0;
+    font-size: 40px;
+    padding-top: 20px;
+}
+
+.heading-box{
+    padding-left: auto;
+    padding-right: auto;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    flex: auto;
+    text-align: center;
+}
+
+.log-in-button{
+    background-color: #00C805;
+    color: black;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500; /* font-medium */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.sign-up-button{
+    background-color: black;
+    color: #00C805;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: 2px solid black;
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500; /* font-medium */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
