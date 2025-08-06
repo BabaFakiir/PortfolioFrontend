@@ -95,7 +95,7 @@ function MainApp({ session, setSession }) {
             fetchPortfolio={fetchPortfolio}
             setSelectedStock={(stock) =>
               navigate(`/stock/${stock.symbol}`, {
-                state: { avgPrice: stock.avgPrice }
+                state: { avgPrice: stock.avgPrice , shares: stock.shares },
               })
             }
           />

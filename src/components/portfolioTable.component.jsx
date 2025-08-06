@@ -31,7 +31,8 @@ function PortfolioTable({ portfolio, fetchPortfolio, setSelectedStock }) {
                     onClick={() => 
                         setSelectedStock({
                             symbol: stock.stock_symbol,
-                            avgPrice: stock.average_price
+                            avgPrice: stock.average_price,
+                            shares: stock.shares
                         })
                         }
                 >

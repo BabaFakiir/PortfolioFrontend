@@ -9,9 +9,11 @@ import { useLocation } from 'react-router-dom';
 function StockHistoryChart() {
     const location = useLocation();
     const avgPurchasePrice = location.state?.avgPrice;
+    const shares = location.state?.shares;
     const { symbol } = useParams();
     const navigate = useNavigate();
     const [data, setData] = useState([]);
+
     const [highestPrice, setHighestPrice] = useState(null);
     const [lowestPrice, setLowestPrice] = useState(null);
     const [avgPrice, setAvgPrice] = useState(null);
@@ -26,15 +28,16 @@ function StockHistoryChart() {
                 const content = response.data;
                 const chartData = content.data.map(item => ({
                     date: item.date,
-                    price: item.avg_price
+                    price: item.avg_price,
+                    avgPurchasePrice: avgPurchasePrice
                 }));
                 setData(chartData);
-                const highestPrice = content.highest_price;
-                const lowestPrice = content.lowest_price;
-                const avgPrice = content.avg_price;
-                const latestPrice = content.latest_price;
-                const priceChange = content.price_deviation;
-                const priceChangePercent = content.price_deviation_percent;
+                const highestPrice = content.highest_price.toFixed(2);
+                const lowestPrice = content.lowest_price.toFixed(2);
+                const avgPrice = content.avg_price.toFixed(2);
+                const latestPrice = content.latest_price.toFixed(2);
+                const priceChange = content.price_deviation.toFixed(2);
+                const priceChangePercent = content.price_deviation_percent.toFixed(2);
                 setHighestPrice(highestPrice);
                 setLowestPrice(lowestPrice);
                 setAvgPrice(avgPrice);
@@ -63,19 +66,41 @@ function StockHistoryChart() {
                             <YAxis domain={['auto', 'auto']} />
                             <Tooltip />
                             <Line type="monotone" dataKey="price" stroke="#8884d8" dot={false} />
+                            <Line type="monotone" dataKey="avgPurchasePrice" stroke="#82ca9d" dot={false}/>
                         </LineChart>
                     </ResponsiveContainer>
                     <div className="mt-4">
-                        <h3 className="text-lg font-semibold">Price Summary</h3>
-                        <ul className="list-disc list-inside">
-                            <li>Highest Price: {highestPrice}</li>
-                            <li>Lowest Price: {lowestPrice}</li>
-                            <li>Average Price: {avgPrice}</li>
-                            <li>Latest Price: {latestPrice}</li>
-                            <li>Price Change: {priceChange}</li>
-                            <li>Price Change (%): {priceChangePercent}</li>
-                            <li>Average Purchase Price: {avgPurchasePrice}</li>
-                        </ul>
+                        <div className='container'>
+                            <div className='grid-header'>
+                                <h3 className="text-lg font-semibold">Price Summary</h3>
+                            </div>
+                            <div className='stats col1'>
+                                <ul className="stats list-disc list-inside">
+                                    <li className='stats-elements'>Highest Price: {highestPrice}</li>
+                                    <li className='stats-elements'>Lowest Price: {lowestPrice}</li>
+                                    <li className='stats-elements'>Average Price: {avgPrice}</li>
+                                </ul>
+                            </div>
+                            <div className='stats col2'>
+                                <ul className="list-disc list-inside">
+                                    <li className='stats-elements'>Latest Price: {latestPrice}</li>
+                                    <li className='stats-elements'>Price Change : {priceChange}</li>
+                                    <li className='stats-elements'>Price Change (%): {priceChangePercent}</li>
+                                </ul>
+                            </div>
+                            <div className='stats col3'>
+                                <ul className="list-disc list-inside">
+                                    <li className='stats-elements'>Avg Purchase Price: {avgPurchasePrice}</li>
+                                    <li className='stats-elements'>Total Shares: {shares}</li>
+                                    <li className='stats-elements'>Total Investment: {(avgPurchasePrice * shares).toFixed(2)}</li>
+                                </ul>
+                            </div>
+                            <div className='stats grid-footer'>
+                                <ul className="list-disc list-inside">
+                                    <li className='stats-elements'>Total realised Gain/Loss: {((latestPrice - avgPurchasePrice) * shares).toFixed(2)}</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
