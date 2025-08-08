@@ -21,6 +21,13 @@ function StockHistoryChart() {
     const [priceChange, setPriceChange] = useState(null);
     const [priceChangePercent, setPriceChangePercent] = useState(null);
 
+    const [predicted_high, setPredictedHigh] = useState(null);
+    const [predicted_low, setPredictedLow] = useState(null);
+    const [predicted_open, setPredictedOpen] = useState(null);
+    const [predicted_close, setPredictedClose] = useState(null);
+    const [trend, setTrend] = useState(null);
+    const [confidence, setConfidence] = useState(null);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -48,7 +55,29 @@ function StockHistoryChart() {
                 console.error("Error fetching stock price:", error);
             }
         };
+        const fetchPrediction = async () => {
+            try {
+                const response = await axios.get(`http://127.0.0.1:8000/predict/${symbol}`);
+                const content = response.data;
+                // Handle prediction data if needed
+                const predicted_open = content.predicted_open.toFixed(2);
+                const predicted_high = content.predicted_high.toFixed(2);
+                const predicted_low = content.predicted_low.toFixed(2);
+                const predicted_close = content.predicted_close.toFixed(2);
+                const trend = content.trend;
+                const confidence = content.confidence.toFixed(4);
+                setPredictedOpen(predicted_open);
+                setPredictedHigh(predicted_high);
+                setPredictedLow(predicted_low);
+                setPredictedClose(predicted_close);
+                setTrend(trend);
+                setConfidence(confidence);
+            } catch (error) {
+                console.error("Error fetching stock prediction:", error);
+            }
+        };
         fetchData();
+        fetchPrediction();
     }, [symbol]);
 
     return (
@@ -59,7 +88,7 @@ function StockHistoryChart() {
                         ← Back
                     </button>
                     <h2 className="text-2xl font-bold mb-4">30-Day Price History: {symbol}</h2>
-                    <ResponsiveContainer width="100%" height={400}>
+                    <ResponsiveContainer width="90%" height={300}>
                         <LineChart data={data} margin={{ top: 20, right: 30, left: 5, bottom: 5 }}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="date" />
@@ -98,6 +127,31 @@ function StockHistoryChart() {
                             <div className='stats grid-footer'>
                                 <ul className="list-disc list-inside">
                                     <li className='stats-elements'>Total realised Gain/Loss: {((latestPrice - avgPurchasePrice) * shares).toFixed(2)}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="mt-4">
+                        <div className='container'>
+                            <div className='grid-header'>
+                                <h3 className="text-lg font-semibold">Price Prediction</h3>
+                            </div>
+                            <div className='stats col1'>
+                                <ul className="stats list-disc list-inside">
+                                    <li className='stats-elements'>Predicted High: {predicted_high}</li>
+                                    <li className='stats-elements'>Predicted Low: {predicted_low}</li>
+                                </ul>
+                            </div>
+                            <div className='stats col2'>
+                                <ul className="list-disc list-inside">
+                                    <li className='stats-elements'>Predicted Open: {predicted_open}</li>
+                                    <li className='stats-elements'>Predicted Close: {predicted_close}</li>
+                                </ul>
+                            </div>
+                            <div className='stats col3'>
+                                <ul className="list-disc list-inside">
+                                    <li className='stats-elements'>Predicted Trend: {trend}</li>
+                                    <li className='stats-elements'>Confidence: {confidence}</li>
                                 </ul>
                             </div>
                         </div>
