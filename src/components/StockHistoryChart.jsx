@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 import axios from 'axios';
 import './componentcss/stockHistoryChart.css';
-import { useLocation } from 'react-router-dom';
+import './componentcss/loadingSpinner.css';
 
 
 function StockHistoryChart() {
@@ -28,9 +28,12 @@ function StockHistoryChart() {
     const [trend, setTrend] = useState(null);
     const [confidence, setConfidence] = useState(null);
 
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setLoading(true);
                 const response = await axios.get(`https://portfoliopythonapi.onrender.com/stock-price/${symbol}`);
                 const content = response.data;
                 const chartData = content.data.map(item => ({
@@ -74,11 +77,23 @@ function StockHistoryChart() {
                 setConfidence(confidence);
             } catch (error) {
                 console.error("Error fetching stock prediction:", error);
+            } finally {
+                setLoading(false); // stop loading once both are done
             }
         };
-        fetchData();
-        fetchPrediction();
+        const fetchAll = async () => {
+            await fetchData();
+            await fetchPrediction();
+        };
+        fetchAll();
     }, [symbol]);
+
+    if (loading) {
+        return (
+            <div className="loader">
+            </div>
+        );
+    }
 
     return (
         <div className='App'>
@@ -87,15 +102,48 @@ function StockHistoryChart() {
                     <button onClick={() => navigate(-1)} className="back-button">
                         ← Back
                     </button>
-                    <h2 className="text-2xl font-bold mb-4">30-Day Price History: {symbol}</h2>
-                    <ResponsiveContainer width="90%" height={300}>
-                        <LineChart data={data} margin={{ top: 20, right: 30, left: 5, bottom: 5 }}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="date" />
-                            <YAxis domain={['auto', 'auto']} />
-                            <Tooltip />
-                            <Line type="monotone" dataKey="price" stroke="#8884d8" dot={false} />
-                            <Line type="monotone" dataKey="avgPurchasePrice" stroke="#82ca9d" dot={false}/>
+                    <div className="stock-header">
+                        <div className="stock-symbol">{symbol}</div>
+                        <div className="stock-price">${latestPrice}</div>
+                        <div className={`stock-change ${priceChange > 0 ? 'green' : 'red'}`}>
+                            {priceChange > 0 ? '▲' : '▼'} ${priceChange} ({priceChangePercent}%)
+                        </div>
+                        <div className="stock-period">Past month</div>
+                    </div>
+                    <ResponsiveContainer width="90%" height={350} style={{ margin: '0 auto' }}>
+                        <LineChart data={data}>
+                            <YAxis
+                                domain={[
+                                    Math.floor(lowestPrice * 0.98),
+                                    Math.ceil(highestPrice * 1.02)
+                                ]}
+                                tickFormatter={(value) => `$${value}`}
+                                stroke="#ccc"
+                            />
+                            <Tooltip
+                                contentStyle={{
+                                    background: "#222",
+                                    border: "none",
+                                    borderRadius: "8px",
+                                    color: "#fff"
+                                }}
+                                labelStyle={{ color: "#fff" }}
+                                labelFormatter={(label) => `Date: ${label}`}
+                                formatter={(value) => [`$${value}`, "Price"]}
+                            />
+                            <Line
+                                type="monotone"
+                                dataKey="price"
+                                stroke="#00C805"
+                                strokeWidth={3}
+                                dot={false}
+                                activeDot={{
+                                    r: 6,
+                                    fill: "#00C805",
+                                    stroke: "#fff",
+                                    strokeWidth: 2
+                                }}
+                            />
                         </LineChart>
                     </ResponsiveContainer>
                     <div className="mt-4">

@@ -70,15 +70,63 @@ const PortfolioChart = ({ portfolio, selectedStock }) => {
     return (
         <div className="portfolio-chart">
             <h2 className="text-xl font-semibold mb-4">{heading}</h2>
-            <ResponsiveContainer className="chart-container" width="95%" height={300} style={{backgroundColor: 'black'}}>
-                <LineChart data={chartData} margin={{ top: 20, right: 30, left: 0, bottom: 5 }} >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line type="monotone" dataKey="invested" stroke="#8884d8" />
-                <Line type="monotone" dataKey="current" stroke="#82ca9d" />
+            <ResponsiveContainer
+                className="chart-container"
+                width="95%"
+                height={300}
+                style={{ backgroundColor: 'black' }}
+            >
+                <LineChart
+                    data={chartData}
+                    margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
+                >
+                    <CartesianGrid strokeDasharray="3 3" stroke="#444" />
+                    <XAxis
+                        dataKey="name"
+                        stroke="#ccc"
+                    />
+                    <YAxis
+                        domain={[
+                            Math.floor(
+                                Math.min(
+                                    ...chartData.map(d => Math.min(d.invested, d.current))
+                                ) * 0.98
+                            ),
+                            Math.ceil(
+                                Math.max(
+                                    ...chartData.map(d => Math.max(d.invested, d.current))
+                                ) * 1.02
+                            )
+                        ]}
+                        tickFormatter={(value) => `$${value}`}
+                        stroke="#ccc"
+                    />
+                    <Tooltip
+                        contentStyle={{
+                            background: "#222",
+                            border: "none",
+                            borderRadius: "8px",
+                            color: "#fff"
+                        }}
+                        labelStyle={{ color: "#fff" }}
+                        labelFormatter={(label) => `Symbol: ${label}`}
+                        formatter={(value, name) => [`$${value}`, name]}
+                    />
+                    <Legend wrapperStyle={{ color: "#fff" }} />
+                    <Line
+                        type="monotone"
+                        dataKey="invested"
+                        stroke="#8884d8"
+                        strokeWidth={2}
+                        dot={false}
+                    />
+                    <Line
+                        type="monotone"
+                        dataKey="current"
+                        stroke="#82ca9d"
+                        strokeWidth={2}
+                        dot={false}
+                    />
                 </LineChart>
             </ResponsiveContainer>
         </div>
