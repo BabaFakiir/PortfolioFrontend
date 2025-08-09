@@ -57,7 +57,7 @@ function StockHistoryChart() {
         };
         const fetchPrediction = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/predict/${symbol}`);
+                const response = await axios.get(`https://portfoliopythonapi.onrender.com/predict/${symbol}`);
                 const content = response.data;
                 // Handle prediction data if needed
                 const predicted_open = content.predicted_open.toFixed(2);
