@@ -1,0 +1,35 @@
+/* 
+.container {
+    display: grid;
+    grid-template-areas:
+        "search qty price"
+        "col1 col2";
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 5px;
+    background-color: black;
+    color:white;
+    padding: 5px;
+}
+
+.container > div.col1 {
+    grid-area: col1;
+}
+
+.container > div.col2 {
+    grid-area: col2;
+}
+.container > div.search {
+    grid-area: search;
+    background-color: white;
+    color: #00C805;
+}
+
+.container > div.qty {
+    grid-area: qty;
+    background-color: white;
+}
+
+.container > div.price {
+    grid-area: price;
+    background-color: white;
+} */

@@ -5,7 +5,7 @@ function SymbolSearch({ onSelect }) {
     const loadOptions = async (inputValue) => {
     if (!inputValue) return [];
         const resp = await fetch(
-            `https://financialmodelingprep.com/api/v3/search?query=${inputValue}&limit=10&exchange=NASDAQ&apikey=5DoRZTsCY0JdOkmZsiufn2HnhXdlsd5x`
+            `https://financialmodelingprep.com/api/v3/search?query=${inputValue}&limit=10&apikey=5DoRZTsCY0JdOkmZsiufn2HnhXdlsd5x`
     );
     const json = await resp.json();
     return json.map(item => ({

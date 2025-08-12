@@ -7,6 +7,7 @@ import AddStock from './components/addStock.component';
 import AuthScreen from './components/authScreen';
 import PortfolioChart from './components/portfolioChart.component';
 import StockHistoryChart from './components/StockHistoryChart';
+import StockInfo from './components/StockInfo.component';
 import './App.css';
 
 function MainApp({ session, setSession }) {
@@ -154,6 +155,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainApp session={session} setSession={setSession} />} />
         <Route path="/stock/:symbol" element={<StockHistoryChart />} />
+        <Route path="/stock-info/:symbol" element={<StockInfo />} />
       </Routes>
     </Router>
   );
