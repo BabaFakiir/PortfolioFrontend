@@ -13,7 +13,7 @@ function AddStock({ newStock, setNewStock, addStock, handleLogout}) {
     const validate = () => {
         const newErrors = {};
 
-        if (!newStock.symbol.trim()) {
+        if (!newStock.symbol || !newStock.symbol.trim()) {
             newErrors.symbol = "Symbol is required.";
         }
 
@@ -38,7 +38,7 @@ function AddStock({ newStock, setNewStock, addStock, handleLogout}) {
     };
 
     const handleGetInfo = () => {
-        if (!newStock.symbol.trim()) {
+        if (!newStock.symbol || !newStock.symbol.trim()) {
             setErrors(prev => ({ ...prev, symbol: "Symbol is required." }));
             return;
         }

@@ -4,13 +4,11 @@
     text-align: center;
     margin: 0;
     font-size: 2xl;
-    padding-top: 20px;
 }
 
 .heading-box{
     padding-left: auto;
     padding-right: auto;
-    padding-top: 20px;
     padding-bottom: 20px;
     flex: auto;
     text-align: center;

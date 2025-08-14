@@ -29,6 +29,79 @@ function MainApp({ session, setSession }) {
     else setPortfolio(data);
   };
 
+  
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setPortfolio([]);
+    setSession(null);
+  };
+
+  return (
+    <div className="App">
+      <Navbar handleLogout={handleLogout} /> {/* ⬅ Navbar at top */}
+      <Header setPortfolio={setPortfolio} />
+      <div className="min-h-screen bg-gray-50 p-6">
+        <div className="max-w-4xl mx-auto bg-white p-6 rounded shadow">
+          <PortfolioChart portfolio={portfolio} />
+          <PortfolioTable
+            portfolio={portfolio}
+            fetchPortfolio={fetchPortfolio}
+            setSelectedStock={(stock) =>
+              navigate(`/stock/${stock.symbol}`, {
+                state: { avgPrice: stock.avgPrice , shares: stock.shares },
+              })
+            }
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [session, setSession] = useState(null);
+  const [authMode, setAuthMode] = useState('login');
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [portfolio, setPortfolio] = useState([]);
+  const [newStock, setNewStock] = useState({ symbol: '', shares: '', price: '' });
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => setSession(session));
+    supabase.auth.onAuthStateChange((_event, session) => setSession(session));
+  }, []);
+
+  const handleGoogleSignIn = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({ provider: 'google' });
+    if (error) console.error('Google Sign-in error:', error.message);
+  };
+
+  const handleLogin = async () => {
+    const { error } = await supabase.auth.signInWithPassword(formData);
+    if (error) alert(error.message);
+  };
+
+  const handleSignup = async () => {
+    const { error } = await supabase.auth.signUp(formData);
+    if (error) alert(error.message);
+    else alert('Check your email for confirmation!');
+  };
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setPortfolio([]);
+    setSession(null);
+  };
+
+  const fetchPortfolio = async () => {
+    const { data, error } = await supabase
+      .from('portfolios')
+      .select('*')
+      .eq('user_id', session?.user?.id);
+    if (error) console.error('Error fetching portfolio:', error);
+    else setPortfolio(data);
+  };
+
   const addStock = async () => {
     const { symbol, shares, price } = newStock;
     const parsedShares = parseFloat(shares);
@@ -86,67 +159,6 @@ function MainApp({ session, setSession }) {
     fetchPortfolio();
   };
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    setPortfolio([]);
-    setSession(null);
-  };
-
-  return (
-    <div className="App">
-      <Navbar handleLogout={handleLogout} /> {/* ⬅ Navbar at top */}
-      <Header setPortfolio={setPortfolio} />
-      <div className="min-h-screen bg-gray-50 p-6">
-        <div className="max-w-4xl mx-auto bg-white p-6 rounded shadow">
-          <PortfolioChart portfolio={portfolio} />
-          <PortfolioTable
-            portfolio={portfolio}
-            fetchPortfolio={fetchPortfolio}
-            setSelectedStock={(stock) =>
-              navigate(`/stock/${stock.symbol}`, {
-                state: { avgPrice: stock.avgPrice , shares: stock.shares },
-              })
-            }
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function App() {
-  const [session, setSession] = useState(null);
-  const [authMode, setAuthMode] = useState('login');
-  const [formData, setFormData] = useState({ email: '', password: '' });
-  const [portfolio, setPortfolio] = useState([]);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => setSession(session));
-    supabase.auth.onAuthStateChange((_event, session) => setSession(session));
-  }, []);
-
-  const handleGoogleSignIn = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({ provider: 'google' });
-    if (error) console.error('Google Sign-in error:', error.message);
-  };
-
-  const handleLogin = async () => {
-    const { error } = await supabase.auth.signInWithPassword(formData);
-    if (error) alert(error.message);
-  };
-
-  const handleSignup = async () => {
-    const { error } = await supabase.auth.signUp(formData);
-    if (error) alert(error.message);
-    else alert('Check your email for confirmation!');
-  };
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    setPortfolio([]);
-    setSession(null);
-  };
-
   if (!session) {
     return (
       <AuthScreen
@@ -166,7 +178,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<MainApp session={session} setSession={setSession} />} />
-        <Route path="/search" element={<AddStock addStock={() => {}} newStock={{}} setNewStock={() => {}} handleLogout={handleLogout} />} />
+        <Route path="/search" element={<AddStock addStock={addStock} newStock={newStock} setNewStock={setNewStock} handleLogout={handleLogout} />} />
         <Route path="/stock/:symbol" element={<StockHistoryChart />} />
         <Route path="/stock-info/:symbol" element={<StockInfo />} />
       </Routes>
