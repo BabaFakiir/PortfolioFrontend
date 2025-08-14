@@ -15,12 +15,12 @@ function Header({ setPortfolio }) {
                 <div className="heading-box">
                     <h1 className="heading">Portfolio Manager</h1>
                 </div>
-                <button
+                {/* <button
                     onClick={handleLogout}
                     className="log-out-button"
                 >
                     Log Out
-                </button>
+                </button> */}
             </div>
         </header>
     );

@@ -69,7 +69,7 @@ const PortfolioChart = ({ portfolio, selectedStock }) => {
 
     return (
         <div className="portfolio-chart">
-            <h2 className="text-xl font-semibold mb-4">{heading}</h2>
+            
             <ResponsiveContainer
                 className="chart-container"
                 width="95%"

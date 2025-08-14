@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import SymbolSearch from '../SymbolSearch';
 import './componentcss/AddStock.component.css';
+import Navbar from './Navbar.component.jsx';
+import '../App.css';
 
-function AddStock({ newStock, setNewStock, addStock }) {
+function AddStock({ newStock, setNewStock, addStock, handleLogout}) {
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
 
@@ -47,7 +49,9 @@ function AddStock({ newStock, setNewStock, addStock }) {
 
     return (
         <div>
-            <h2 style={{ marginBottom: '0.5rem' }}>Add New Stock</h2>
+            <div style={{ paddingTop: '20px', paddingLeft: '20px' }}>
+                <Navbar handleLogout={handleLogout} />
+            </div>
             <div className="add-stock-form container">
                 <div className="input-group search">
                     <SymbolSearch

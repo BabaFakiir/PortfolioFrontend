@@ -1,5 +1,6 @@
 import React from 'react';
 import './componentcss/AuthScreen.css';
+import logo from './assets/app_logo.png';
 
 
 function AuthScreen({
@@ -14,7 +15,10 @@ function AuthScreen({
     return (
         <div className="App">
             <div className="heading-box">
-                <h1 className="heading">Welcome to shAIr</h1>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '20px' , justifyContent: 'center'}}>
+                    <img src={logo} alt="App Logo" className="app-logo" style={{ height: '400px' }} />
+                </div>
+                {/* <h1 className="heading">Welcome to shAIr</h1> */}
                 <h2 className="subheading">Your Personal Portfolio Manager</h2>
 
                 <h3 className="text-lg font-bold mb-4 text-white">

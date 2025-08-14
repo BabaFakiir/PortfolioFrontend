@@ -1,0 +1,13 @@
+.log-out-button{
+    background-color: #00C805;
+    color: black;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500; /* font-medium */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
