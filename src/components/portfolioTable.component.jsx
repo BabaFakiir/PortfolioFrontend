@@ -2,7 +2,7 @@ import React from 'react';
 import { supabase } from '../supabaseClient';
 import '../App.css';
 import './componentcss/portfolioTable.css';
-import trashicon from './assets/trash.jpg';
+import trashicon from './assets/trash.png';
 
 function PortfolioTable({ portfolio, fetchPortfolio, setSelectedStock }) {
 
