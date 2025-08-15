@@ -1,0 +1,30 @@
+.table-container{
+    padding-left: 8%;
+    padding-right: 8%;
+    padding-top: 5%;
+}
+
+.heading{
+    font-size: 24px;
+    font-weight: bold;
+    color: #00C805;
+    padding-left: auto;
+    padding-right: auto;
+    flex: auto;
+    text-align: center;
+}
+
+.select-stock-button {
+    color: #00C805;
+    background-color: transparent;
+    border: 2px solid #00C805;
+    font-size: medium;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 35%;
+}
+
+.trash-icon {
+    cursor: pointer;
+}

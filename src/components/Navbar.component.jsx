@@ -31,6 +31,7 @@ function Navbar({ handleLogout }) {
             </Link>
             <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>Portfolio</Link>
             <Link to="/search" style={{ color: 'white', textDecoration: 'none' }}>Search Stock</Link>
+            <Link to="/wishlist" style={{ color: 'white', textDecoration: 'none' }}>Watchlist</Link>
         </div>
 
         <div style={{ position: 'relative', display: 'inline-block' }}>

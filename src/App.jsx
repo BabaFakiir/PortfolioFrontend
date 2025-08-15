@@ -9,6 +9,8 @@ import PortfolioChart from './components/portfolioChart.component';
 import StockHistoryChart from './components/StockHistoryChart';
 import StockInfo from './components/StockInfo.component';
 import Navbar from './components/Navbar.component.jsx';
+import Wishlist from './components/watchlist.component.jsx';
+import Watchlist_page from './components/watchlist_page.component';
 import './App.css';
 
 function MainApp({ session, setSession }) {
@@ -178,9 +180,10 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<MainApp session={session} setSession={setSession} />} />
-        <Route path="/search" element={<AddStock addStock={addStock} newStock={newStock} setNewStock={setNewStock} handleLogout={handleLogout} />} />
+        <Route path="/search" element={<AddStock addStock={addStock} newStock={newStock} setNewStock={setNewStock} handleLogout={handleLogout} session={session} />} />
         <Route path="/stock/:symbol" element={<StockHistoryChart />} />
         <Route path="/stock-info/:symbol" element={<StockInfo />} />
+        <Route path="/wishlist" element={<Watchlist_page session={session} handleLogout={handleLogout} />} />
       </Routes>
     </Router>
   );

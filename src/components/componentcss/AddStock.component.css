@@ -3,7 +3,7 @@
     display: grid;
     grid-template-areas:
         "search qty price"
-        "col1 col2";
+        "col1 col2 col3";
     grid-template-columns: 1fr 1fr 1fr;
     gap: 5px;
     background-color: black;
@@ -17,6 +17,9 @@
 
 .container > div.col2 {
     grid-area: col2;
+}
+.container > div.col3 {
+    grid-area: col3;
 }
 .container > div.search {
     grid-area: search;

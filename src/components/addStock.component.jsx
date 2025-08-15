@@ -6,7 +6,7 @@ import './componentcss/AddStock.component.css';
 import Navbar from './Navbar.component.jsx';
 import '../App.css';
 
-function AddStock({ newStock, setNewStock, addStock, handleLogout}) {
+function AddStock({ newStock, setNewStock, addStock, handleLogout, session}) {
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
 
@@ -46,6 +46,36 @@ function AddStock({ newStock, setNewStock, addStock, handleLogout}) {
             state: { }
         });
     };
+
+    const addToWishlist = async (symbol) => {
+        try {
+            // Check if already in wishlist
+            const { data: existing, error: checkError } = await supabase
+                .from('wishlists')
+                .select('id')
+                .eq('user_id', session.user.id)
+                .eq('stock_symbol', symbol);
+
+            if (checkError) throw checkError;
+
+            if (existing.length > 0) {
+                alert(`${symbol} is already in your wishlist.`);
+                return;
+            }
+
+            // Add to wishlist
+            const { error } = await supabase.from('wishlists').insert([
+                { user_id: session.user.id, stock_symbol: symbol }
+            ]);
+
+            if (error) throw error;
+
+            alert(`${symbol} added to wishlist.`);
+        } catch (err) {
+            console.error('Error adding to wishlist:', err);
+        }
+    };
+
 
     return (
         <div>
@@ -89,6 +119,11 @@ function AddStock({ newStock, setNewStock, addStock, handleLogout}) {
                     <div className='col2'>
                         <button className="add-button" onClick={handleGetInfo}>
                             Get Info/Prediction
+                        </button>
+                    </div>
+                    <div className='col3'>
+                        <button className="add-button" onClick={addToWishlist.bind(this, newStock.symbol)}>
+                            Add to Wishlist
                         </button>
                     </div>
                 </div>
