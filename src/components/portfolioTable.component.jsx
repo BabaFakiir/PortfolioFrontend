@@ -13,7 +13,7 @@ function PortfolioTable({ portfolio, fetchPortfolio, setSelectedStock }) {
     };
 
     return (
-        <table className="w-full mb-6 border border-gray-200" style={{ alignContent: 'center', margin: 'auto', width: '60%', textAlign: 'center', border: '1px solid black' }}>
+        <table className="w-full mb-6 border border-gray-200" style={{ alignContent: 'center', margin: 'auto', width: '90%', textAlign: 'center', border: '1px solid black' }}>
         <thead className="bg-gray-100">
             <tr>
             <th className="text-left p-2">Stock Symbol</th>

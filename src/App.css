@@ -8,16 +8,15 @@
 .header {
   background-color: #121212;
   color: #00C805;
-  padding: 1rem;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: clamp(1rem, 4vw, 1.5rem);
   border-bottom: 1px solid #2E2E2E;
 }
 
 .container {
+  width: 100%;
   max-width: 800px;
-  margin: 2rem auto;
-  padding: 1.5rem;
+  margin: auto;
   background: #121212;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
