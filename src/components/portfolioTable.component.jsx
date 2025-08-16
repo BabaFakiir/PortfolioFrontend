@@ -25,7 +25,7 @@ function PortfolioTable({ portfolio, fetchPortfolio, setSelectedStock }) {
         <tbody>
             {portfolio.map(stock => (
             <tr key={stock.id} className="border-t">
-                <td className="p-2" style={{ paddingRight: '10%' }}>
+                <td data-label="Stock Symbol" className="p-2" style={{ paddingRight: '10%' }}>
                 <button
                     className="select-stock-button"
                     onClick={() => 
@@ -39,9 +39,9 @@ function PortfolioTable({ portfolio, fetchPortfolio, setSelectedStock }) {
                     {stock.stock_symbol}
                 </button>
                 </td>
-                <td className="p-2">{stock.shares}</td>
-                <td className="p-2">{stock.average_price}</td>
-                <td className="p-2">
+                <td data-label="Shares" className="p-2">{stock.shares}</td>
+                <td data-label="Avg. Price" className="p-2">{stock.average_price}</td>
+                <td data-label="Action" className="p-2">
                 <button
                     onClick={() => deleteStock(stock.id)}
                 >

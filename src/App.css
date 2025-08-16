@@ -5,44 +5,22 @@
   color: #FFFFFF;
 }
 
-/* Baseline improvements */
-*,
-*::before,
-*::after { box-sizing: border-box; }
-
-:root {
-  --gap-1: 0.5rem;
-  --gap-2: 1rem;
-}
-
 .header {
   background-color: #121212;
   color: #00C805;
   padding: 1rem;
   text-align: center;
-  font-size: clamp(1.2rem, 4vw, 1.5rem);
+  font-size: 1.5rem;
   border-bottom: 1px solid #2E2E2E;
 }
 
 .container {
-  width: 100%;
-  max-width: 800px;       /* still respected on larger screens */
+  max-width: 800px;
   margin: 2rem auto;
   padding: 1.5rem;
   background: #121212;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-}
-@media (max-width: 640px) {
-  .container {
-    margin: 0;
-    padding: 1rem;
-    border-radius: 0;
-    box-shadow: none;
-    background: #121212;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-  }
 }
 
 .table {
@@ -67,10 +45,8 @@
 .table tr:hover {
   background-color: #1A1A1A;
 }
-/* Buttons & inputs: better tap targets */
+
 .button {
-  min-height: 44px;            /* Apple HIG-friendly */
-  width: auto;
   background-color: #00C805;
   color: #000000;
   padding: 10px 15px;
@@ -80,19 +56,7 @@
   font-weight: bold;
   transition: background 0.2s ease-in-out;
 }
-@media (max-width: 640px) {
-  .button {
-    width: 100%;               /* full-width CTAs on phones */
-    background-color: #00C805;
-    color: #000000;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.2s ease-in-out;
-  }
-}
+
 .button:hover {
   background-color: #00A504;
 }
@@ -103,34 +67,11 @@ input {
     padding: 10px;
     color: white;
     border-radius: 5px;
-    width: 100%;
-    min-height: 44px;
-
 }
 
 .input:focus {
   border-color: #00C805;
   outline: none;
-}
-
-.add-stock-form {
-  padding: 20px;
-}
-@media (max-width: 640px) {
-  .add-stock-form {
-    padding: 14px;
-  }
-  .input-group {
-    gap: var(--gap-1);
-    margin-bottom: var(--gap-2);
-  }
-  .add-stock-form .add-button {
-    width: 100%;
-  }
-}
-.App {
-  overflow-x: hidden;
-  word-break: break-word;
 }
 
 .add-stock-form {
@@ -193,40 +134,4 @@ input {
     color: #ff5252;
     font-size: 0.85rem;
     margin-top: 4px;
-}
-
-@media (max-width: 640px) {
-  .table {
-    display: block;
-    width: 100%;
-  }
-  .table thead {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;        /* hide headers but keep for a11y */
-  }
-  .table tr {
-    display: block;
-    margin: 0 0 1rem 0;
-    padding: 0.5rem 0.75rem;
-    border: 1px solid #2E2E2E;
-    border-radius: 8px;
-    background: #121212;
-  }
-  .table td {
-    display: grid;
-    grid-template-columns: 42% 58%;
-    align-items: center;
-    padding: 8px 0;
-    border: none;
-  }
-  .table td::before {
-    content: attr(data-label);  /* uses the data-label from each cell */
-    color: #AAAAAA;
-    font-weight: 600;
-    padding-right: 0.75rem;
-  }
 }
