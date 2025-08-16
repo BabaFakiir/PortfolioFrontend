@@ -43,15 +43,15 @@ function MainApp({ session, setSession }) {
     <div className="App">
       <Navbar handleLogout={handleLogout} /> {/* ⬅ Navbar at top */}
       <Header setPortfolio={setPortfolio} />
-      <div className="min-h-screen bg-gray-50 p-6">
-        <div className="max-w-4xl mx-auto bg-white p-6 rounded shadow">
+      <div className="min-h-screen bg-gray-50 p-4 sm:p-6">
+        <div className="mx-auto bg-white p-4 sm:p-6 shadow rounded-none md:rounded max-w-full md:max-w-4xl">
           <PortfolioChart portfolio={portfolio} />
           <PortfolioTable
             portfolio={portfolio}
             fetchPortfolio={fetchPortfolio}
             setSelectedStock={(stock) =>
               navigate(`/stock/${stock.symbol}`, {
-                state: { avgPrice: stock.avgPrice , shares: stock.shares },
+                state: { avgPrice: stock.avgPrice, shares: stock.shares },
               })
             }
           />
