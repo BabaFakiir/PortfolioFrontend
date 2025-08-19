@@ -18,8 +18,20 @@
     position: absolute;
     top: 20px;
     right: 20px;
-
 }
+
+/* Mobile responsive back button */
+@media (max-width: 768px) {
+    .back-button {
+        position: relative;
+        top: auto;
+        right: auto;
+        margin-bottom: 15px;
+        display: block;
+        width: fit-content;
+    }
+}
+
 .chart-overlay {
   position: fixed;
   inset: 0;
@@ -94,6 +106,21 @@
   padding: 5px;
 }
 
+/* Mobile responsive container */
+@media (max-width: 768px) {
+  .container {
+    grid-template-areas:
+      "grid-header"
+      "col1"
+      "col2"
+      "col3"
+      "grid-footer";
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 10px;
+  }
+}
+
 .container > div.col1 {
   grid-area: col1;
 }
@@ -123,9 +150,25 @@
   font-size: large;
 }
 
+/* Mobile responsive stats */
+@media (max-width: 768px) {
+  .stats {
+    font-size: medium;
+  }
+}
+
 .stats-elements {
 padding: 5px;
 }
+
+/* Mobile responsive stats elements */
+@media (max-width: 768px) {
+  .stats-elements {
+    padding: 8px;
+    margin-bottom: 5px;
+  }
+}
+
 .stock-chart-root {
   background: #000;
   min-height: 100vh;
@@ -140,6 +183,15 @@ padding: 5px;
   text-align: left;
   margin-left: 3%;
   margin-top: 2%;
+}
+
+/* Mobile responsive stock header */
+@media (max-width: 768px) {
+  .stock-header {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 5%;
+  }
 }
 
 .stock-symbol {
@@ -159,6 +211,13 @@ padding: 5px;
 .stock-change {
   font-size: 1.1rem;
   margin-bottom: 0.5rem;
+}
+
+/* Mobile responsive stock change */
+@media (max-width: 768px) {
+  .stock-change {
+    font-size: 1rem;
+  }
 }
 
 .stock-change.green {
@@ -182,6 +241,14 @@ padding: 5px;
   margin: 18px 0 0 0;
 }
 
+/* Mobile responsive period selector */
+@media (max-width: 768px) {
+  .stock-period-selector {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
 .period {
   color: #00C805;
   background: transparent;
@@ -194,11 +261,27 @@ padding: 5px;
   transition: background 0.2s, opacity 0.2s;
 }
 
+/* Mobile responsive period */
+@media (max-width: 768px) {
+  .period {
+    font-size: 1rem;
+    padding: 6px 10px;
+  }
+}
+
 .period.active {
   background: #00C805;
   color: #000;
   opacity: 1;
 }
+
+/* Mobile responsive chart container */
+@media (max-width: 768px) {
+  .recharts-responsive-container {
+    height: 250px !important;
+  }
+}
+
 .recharts-cartesian-grid,
 .recharts-xAxis,
 .recharts-yAxis {
@@ -207,4 +290,11 @@ padding: 5px;
 
 .recharts-tooltip-label {
   color: #fff !important;
+}
+
+/* Mobile responsive tooltip */
+@media (max-width: 768px) {
+  .recharts-tooltip-wrapper {
+    font-size: 12px !important;
+  }
 }

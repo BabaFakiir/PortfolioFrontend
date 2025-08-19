@@ -6,12 +6,29 @@
     font-size: 2xl;
 }
 
+/* Mobile responsive heading */
+@media (max-width: 768px) {
+    .heading {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+}
+
 .heading-box{
     padding-left: auto;
     padding-right: auto;
     padding-bottom: 20px;
     flex: auto;
     text-align: center;
+}
+
+/* Mobile responsive heading box */
+@media (max-width: 768px) {
+    .heading-box {
+        padding-bottom: 15px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
 }
 
 .log-out-button{
@@ -26,4 +43,16 @@
     position: absolute;
     top: 20px;
     right: 20px;
+}
+
+/* Mobile responsive logout button */
+@media (max-width: 768px) {
+    .log-out-button {
+        position: relative;
+        top: auto;
+        right: auto;
+        margin: 10px auto;
+        display: block;
+        width: fit-content;
+    }
 }

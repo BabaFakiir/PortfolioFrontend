@@ -45,7 +45,7 @@ function PortfolioTable({ portfolio, fetchPortfolio, setSelectedStock }) {
                 <button
                     onClick={() => deleteStock(stock.id)}
                 >
-                    <img src={trashicon} className="delete-icon" />
+                    <img src={trashicon} className="delete-icon" alt="Delete" />
                 </button>
                 </td>
             </tr>

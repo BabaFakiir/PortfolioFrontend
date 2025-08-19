@@ -22,6 +22,15 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
 }
 
+/* Mobile responsive container */
+@media (max-width: 768px) {
+  .container {
+    max-width: 100%;
+    margin: 10px;
+    border-radius: 6px;
+  }
+}
+
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -80,12 +89,21 @@ input {
     border-radius: 10px;
 }
 
+/* Mobile responsive add stock form */
+@media (max-width: 768px) {
+  .add-stock-form {
+    padding: 15px;
+    margin: 10px;
+    border-radius: 8px;
+  }
+}
 
 .input-group {
     display: flex;
     flex-direction: column;
     margin-bottom: 1rem;
 }
+
 .add-stock-form input,
 .symbol-search-input {
   background-color: #1A1A1A;
@@ -98,6 +116,15 @@ input {
   font-weight: 400;
 }
 
+/* Mobile responsive input styles */
+@media (max-width: 768px) {
+  .add-stock-form input,
+  .symbol-search-input {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+}
 
 .symbol-search-input {
   flex: 3;
@@ -106,7 +133,6 @@ input {
 .add-stock-form input[type="number"]:nth-of-type(1) { /* Shares */
   flex: 1;
 }
-
 
 .add-stock-form input[type="number"]:nth-of-type(2) { /* Avg Price */
   flex: 1;
@@ -124,13 +150,69 @@ input {
   transition: background-color 0.2s ease-in-out;
 }
 
+/* Mobile responsive add button */
+@media (max-width: 768px) {
+  .add-stock-form .add-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+}
+
 .add-stock-form .add-button:hover {
   background-color: #00A504;
 }
-
 
 .error-message {
     color: #ff5252;
     font-size: 0.85rem;
     margin-top: 4px;
+}
+
+/* Mobile responsive error message */
+@media (max-width: 768px) {
+  .error-message {
+    font-size: 14px;
+    margin-top: 5px;
+  }
+}
+
+/* Mobile responsive main app layout */
+@media (max-width: 768px) {
+  .min-h-screen {
+    padding: 10px !important;
+  }
+  
+  .mx-auto {
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+  
+  .bg-white {
+    padding: 15px !important;
+    border-radius: 8px !important;
+  }
+}
+
+/* Tablet responsive styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container {
+    max-width: 90%;
+  }
+  
+  .add-stock-form {
+    padding: 25px;
+  }
+  
+  .add-stock-form input,
+  .symbol-search-input {
+    font-size: 15px;
+    padding: 11px;
+  }
+  
+  .add-stock-form .add-button {
+    padding: 11px 15px;
+    font-size: 15px;
+  }
 }

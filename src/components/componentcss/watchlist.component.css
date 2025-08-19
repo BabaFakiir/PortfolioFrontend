@@ -4,6 +4,15 @@
     padding-top: 5%;
 }
 
+/* Mobile responsive table container */
+@media (max-width: 768px) {
+    .table-container {
+        padding-left: 5%;
+        padding-right: 5%;
+        padding-top: 3%;
+    }
+}
+
 .heading{
     font-size: 24px;
     font-weight: bold;
@@ -12,6 +21,14 @@
     padding-right: auto;
     flex: auto;
     text-align: center;
+}
+
+/* Mobile responsive heading */
+@media (max-width: 768px) {
+    .heading {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
 }
 
 .select-stock-button {
@@ -25,6 +42,83 @@
     margin-left: 35%;
 }
 
+/* Mobile responsive select stock button */
+@media (max-width: 768px) {
+    .select-stock-button {
+        margin-left: 0;
+        width: 100%;
+        margin-top: 10px;
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+}
+
 .trash-icon {
     cursor: pointer;
+}
+
+/* Mobile responsive table styles */
+@media (max-width: 768px) {
+    .table {
+        width: 100% !important;
+    }
+    
+    .table thead {
+        display: none;
+    }
+    
+    .table tbody tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #333;
+        border-radius: 8px;
+        padding: 15px;
+        background-color: #1a1a1a;
+    }
+    
+    .table tbody td {
+        display: block;
+        text-align: left !important;
+        padding: 8px 0 !important;
+        border: none !important;
+        position: relative;
+    }
+    
+    .table tbody td:before {
+        content: attr(data-label) ": ";
+        font-weight: bold;
+        color: #00C805;
+        margin-right: 10px;
+    }
+    
+    .table tbody td:last-child {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+    
+    .trash-icon {
+        align-self: center;
+        margin-top: 5px;
+    }
+    
+    .trash-icon img {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* Tablet responsive styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .table-container {
+        padding-left: 6%;
+        padding-right: 6%;
+    }
+    
+    .select-stock-button {
+        margin-left: 25%;
+        font-size: 16px;
+        padding: 6px 12px;
+    }
 }

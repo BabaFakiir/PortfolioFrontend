@@ -128,7 +128,7 @@ function StockHistoryChart() {
                         </div>
                         <div className="stock-period">Past month</div>
                     </div>
-                    <ResponsiveContainer width="90%" height={350} style={{ margin: '0 auto' }}>
+                    <ResponsiveContainer width="90%" height={window.innerWidth <= 768 ? 250 : 350} style={{ margin: '0 auto' }}>
                         <LineChart data={data}>
                             <YAxis
                                 domain={[
@@ -206,7 +206,7 @@ function StockHistoryChart() {
 
                                     {showRSIChart && (
                                         <div className="mt-4">
-                                            <ResponsiveContainer width="90%" height={300} style={{ margin: '0 auto' }}>
+                                            <ResponsiveContainer width="90%" height={window.innerWidth <= 768 ? 200 : 300} style={{ margin: '0 auto' }}>
                                                 <LineChart data={rsiData}>
                                                     <CartesianGrid stroke="#ccc" />
                                                     <XAxis dataKey="date" />
@@ -234,7 +234,7 @@ function StockHistoryChart() {
                                     </li>
                                     {showMACDChart && (
                                         <div className="mt-4">
-                                            <ResponsiveContainer width="90%" height={300} style={{ margin: '0 auto' }}>
+                                            <ResponsiveContainer width="90%" height={window.innerWidth <= 768 ? 200 : 300} style={{ margin: '0 auto' }}>
                                                 <LineChart data={macdData}>
                                                     <CartesianGrid stroke="#ccc" />
                                                     <XAxis dataKey="date" />

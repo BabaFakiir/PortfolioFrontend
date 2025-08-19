@@ -60,10 +60,10 @@ function Wishlist({ session, handleLogout }) {
                             <tbody>
                                 {wishlistItems.map(item => (
                                     <tr key={item.symbol}>
-                                        <td>{item.symbol}</td>
-                                        <td>{item.price !== null ? `$${item.price}` : "N/A"}</td>
+                                        <td data-label="Stock Symbol">{item.symbol}</td>
+                                        <td data-label="Current Price">{item.price !== null ? `$${item.price}` : "N/A"}</td>
 
-                                        <td style={{ display: 'flex', gap: '20%' }}>
+                                        <td data-label="Action" style={{ display: 'flex', gap: '20%' }}>
                                             <button className='select-stock-button' onClick={() => handleGetInfo(item.symbol)}>
                                                 Info / Prediction
                                             </button>

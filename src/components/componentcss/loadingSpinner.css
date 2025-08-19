@@ -8,6 +8,16 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+/* Mobile responsive loader */
+@media (max-width: 768px) {
+  .loader {
+    padding: 3px;
+    width: 90%;
+    max-width: 300px;
+  }
+}
+
 .loader:before,
 .loader:after {
   content: "Making Predictions...";
@@ -23,9 +33,20 @@
   clip-path: inset(0 100% 0 0);
   animation: l15 1.5s infinite linear;
 }
+
+/* Mobile responsive loader content */
+@media (max-width: 768px) {
+  .loader:before,
+  .loader:after {
+    height: 30px;
+    font-size: 14px;
+  }
+}
+
 .loader:after {
   scale: -1 1;
 }
+
 @keyframes l15{
   50% {clip-path: inset(0)}
   to {clip-path: inset(0 0 0 100%)}

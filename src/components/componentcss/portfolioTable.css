@@ -12,3 +12,65 @@
     width: 18px;
     height: 18px;
 }
+
+/* Mobile responsive table styles */
+@media (max-width: 768px) {
+    table {
+        width: 100% !important;
+        margin: 0 !important;
+        border: none !important;
+    }
+    
+    table thead {
+        display: none;
+    }
+    
+    table tbody tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #333;
+        border-radius: 8px;
+        padding: 15px;
+        background-color: #1a1a1a;
+    }
+    
+    table tbody td {
+        display: block;
+        text-align: left !important;
+        padding: 8px 0 !important;
+        border: none !important;
+        position: relative;
+    }
+    
+    table tbody td:before {
+        content: attr(data-label) ": ";
+        font-weight: bold;
+        color: #00C805;
+        margin-right: 10px;
+    }
+    
+    .select-stock-button {
+        font-size: 14px;
+        padding: 8px 12px;
+        width: 100%;
+        margin-top: 5px;
+    }
+    
+    .delete-icon {
+        width: 20px;
+        height: 20px;
+        margin-top: 5px;
+    }
+}
+
+/* Tablet responsive styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+    table {
+        width: 95% !important;
+    }
+    
+    .select-stock-button {
+        font-size: 16px;
+        padding: 6px 12px;
+    }
+}

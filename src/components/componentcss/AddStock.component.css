@@ -36,3 +36,63 @@
     grid-area: price;
     background-color: white;
 } */
+
+/* Mobile responsive form styles */
+@media (max-width: 768px) {
+    .add-stock-form {
+        padding: 15px !important;
+        margin: 10px;
+        border-radius: 8px;
+    }
+    
+    .add-stock-form .input-group {
+        margin-bottom: 15px;
+    }
+    
+    .add-stock-form input,
+    .symbol-search-input {
+        font-size: 16px !important; /* Prevents zoom on iOS */
+        padding: 12px !important;
+        margin-bottom: 10px;
+    }
+    
+    .add-stock-form .container {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+    
+    .add-stock-form .container > div {
+        width: 100% !important;
+    }
+    
+    .add-stock-form .add-button {
+        width: 100% !important;
+        padding: 12px !important;
+        font-size: 16px !important;
+        margin-bottom: 5px;
+    }
+    
+    .error-message {
+        font-size: 14px !important;
+        margin-top: 5px !important;
+    }
+}
+
+/* Tablet responsive styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .add-stock-form {
+        padding: 25px !important;
+    }
+    
+    .add-stock-form input,
+    .symbol-search-input {
+        font-size: 15px !important;
+        padding: 11px !important;
+    }
+    
+    .add-stock-form .add-button {
+        padding: 11px 15px !important;
+        font-size: 15px !important;
+    }
+}

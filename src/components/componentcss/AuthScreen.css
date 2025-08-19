@@ -14,6 +14,14 @@
     padding-bottom: 20px;
 }
 
+/* Mobile responsive subheading */
+@media (max-width: 768px) {
+    .subheading {
+        font-size: 1rem;
+        padding-bottom: 15px;
+    }
+}
+
 .heading{
     font-weight: bold;
     color: #00C805;
@@ -23,6 +31,14 @@
     padding-top: 20px;
 }
 
+/* Mobile responsive heading */
+@media (max-width: 768px) {
+    .heading {
+        font-size: 28px;
+        padding-top: 15px;
+    }
+}
+
 .heading-box{
     padding-left: auto;
     padding-right: auto;
@@ -30,6 +46,16 @@
     padding-bottom: 20px;
     flex: auto;
     text-align: center;
+}
+
+/* Mobile responsive heading box */
+@media (max-width: 768px) {
+    .heading-box {
+        padding-top: 20px;
+        padding-bottom: 15px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
 }
 
 .log-in-button{
@@ -43,6 +69,18 @@
     transition: background-color 0.3s ease;
 }
 
+/* Mobile responsive login button */
+@media (max-width: 768px) {
+    .log-in-button {
+        padding: 12px 20px;
+        font-size: 1rem;
+        width: 100%;
+        max-width: 300px;
+        margin: 5px auto;
+        display: block;
+    }
+}
+
 .sign-up-button{
     background-color: black;
     color: #00C805;
@@ -53,4 +91,38 @@
     font-weight: 500; /* font-medium */
     cursor: pointer;
     transition: background-color 0.3s ease;
+}
+
+/* Mobile responsive signup button */
+@media (max-width: 768px) {
+    .sign-up-button {
+        padding: 12px 20px;
+        font-size: 1rem;
+        width: 100%;
+        max-width: 300px;
+        margin: 5px auto;
+        display: block;
+    }
+}
+
+/* Mobile responsive form inputs */
+@media (max-width: 768px) {
+    input[type="email"],
+    input[type="password"] {
+        font-size: 16px !important; /* Prevents zoom on iOS */
+        padding: 12px !important;
+        width: 100% !important;
+        max-width: 300px !important;
+        margin: 5px auto !important;
+        display: block !important;
+    }
+    
+    .auth-form {
+        padding: 20px !important;
+        margin: 10px !important;
+    }
+    
+    .auth-container {
+        padding: 15px !important;
+    }
 }
