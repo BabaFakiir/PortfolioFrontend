@@ -11,51 +11,161 @@
 
 /* Mobile responsive navbar styles */
 @media (max-width: 768px) {
-    nav {
-        flex-direction: column !important;
-        padding: 10px !important;
-        gap: 15px;
+    /* Hide desktop navbar elements on mobile */
+    nav > div:first-child {
+        display: none !important;
     }
     
-    nav > div:first-child {
-        flex-direction: column !important;
-        gap: 15px;
+    nav > div:last-child {
+        display: none !important;
+    }
+    
+    /* Show hamburger menu on mobile */
+    .mobile-menu-toggle {
+        display: block !important;
+        cursor: pointer;
+        z-index: 1001;
+    }
+    
+    .hamburger {
+        width: 25px;
+        height: 20px;
+        position: relative;
+        cursor: pointer;
+    }
+    
+    .hamburger span {
+        display: block;
+        position: absolute;
+        height: 3px;
         width: 100%;
+        background: #00C805;
+        border-radius: 3px;
+        opacity: 1;
+        left: 0;
+        transform: rotate(0deg);
+        transition: .25s ease-in-out;
+    }
+    
+    .hamburger span:nth-child(1) {
+        top: 0px;
+    }
+    
+    .hamburger span:nth-child(2) {
+        top: 8px;
+    }
+    
+    .hamburger span:nth-child(3) {
+        top: 16px;
+    }
+    
+    .hamburger.active span:nth-child(1) {
+        top: 8px;
+        transform: rotate(135deg);
+    }
+    
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+        left: -60px;
+    }
+    
+    .hamburger.active span:nth-child(3) {
+        top: 8px;
+        transform: rotate(-135deg);
+    }
+    
+    /* Mobile menu overlay */
+    .mobile-menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
         align-items: center;
     }
     
-    nav a {
-        font-size: 16px !important;
-        padding: 8px 12px;
-        border-radius: 4px;
+    .mobile-menu-content {
+        background: #111;
+        width: 90%;
+        max-width: 350px;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    
+    .mobile-menu-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #333;
+    }
+    
+    .mobile-logo {
+        height: 50px;
+    }
+    
+    .mobile-close-btn {
+        background: none;
+        border: none;
+        color: #00C805;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 5px;
+    }
+    
+    .mobile-menu-links {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+    
+    .mobile-menu-links a {
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+        padding: 12px 15px;
+        border-radius: 8px;
         transition: background-color 0.2s ease;
     }
     
-    nav a:hover {
+    .mobile-menu-links a:hover {
         background-color: #333;
     }
     
-    nav img[alt="App Logo"] {
-        height: 60px !important;
-        margin-right: 0 !important;
+    .mobile-menu-profile {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #333;
     }
     
-    nav img[alt="Profile"] {
-        height: 30px !important;
+    .mobile-profile-icon {
+        height: 30px;
     }
     
-    /* Dropdown positioning for mobile */
-    nav > div:last-child > div:last-child {
-        position: fixed !important;
-        top: 50% !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%) !important;
-        background: #111 !important;
-        padding: 20px !important;
-        border-radius: 8px !important;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.5) !important;
-        z-index: 1000 !important;
-        margin-right: 0 !important;
+    .mobile-menu-profile .log-out-button {
+        flex: 1;
+        padding: 10px;
+        font-size: 16px;
+    }
+}
+
+/* Hide hamburger menu on desktop */
+@media (min-width: 769px) {
+    .mobile-menu-toggle {
+        display: none !important;
+    }
+    
+    .mobile-menu-overlay {
+        display: none !important;
     }
 }
 

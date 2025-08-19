@@ -43,10 +43,14 @@
         padding: 15px !important;
         margin: 10px;
         border-radius: 8px;
+        text-align: center;
     }
     
     .add-stock-form .input-group {
         margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     
     .add-stock-form input,
@@ -54,16 +58,24 @@
         font-size: 16px !important; /* Prevents zoom on iOS */
         padding: 12px !important;
         margin-bottom: 10px;
+        width: 90% !important;
+        max-width: 300px !important;
+        text-align: center;
     }
     
     .add-stock-form .container {
         display: flex !important;
         flex-direction: column !important;
         gap: 10px !important;
+        align-items: center;
+        width: 100%;
     }
     
     .add-stock-form .container > div {
-        width: 100% !important;
+        width: 90% !important;
+        max-width: 300px !important;
+        display: flex;
+        justify-content: center;
     }
     
     .add-stock-form .add-button {
@@ -71,11 +83,14 @@
         padding: 12px !important;
         font-size: 16px !important;
         margin-bottom: 5px;
+        max-width: 300px !important;
     }
     
     .error-message {
         font-size: 14px !important;
         margin-top: 5px !important;
+        text-align: center;
+        width: 100%;
     }
 }
 
