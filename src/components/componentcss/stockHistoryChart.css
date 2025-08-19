@@ -32,6 +32,70 @@
     }
 }
 
+/* Prediction button styles */
+.get-prediction-btn {
+    background-color: transparent !important;
+    color: #00C805 !important;
+    padding: 12px 24px !important;
+    border: 2px solid #00C805 !important;
+    border-radius: 6px !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    width: 50% !important;
+    max-width: 300px !important;
+    margin: 0 auto !important;
+    display: block !important;
+}
+
+.get-prediction-btn:hover {
+    background-color: #00C805 !important;
+    color: black !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(0, 200, 5, 0.3) !important;
+}
+
+.get-prediction-btn:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 6px rgba(0, 200, 5, 0.2) !important;
+}
+
+/* Mobile responsive prediction button */
+@media (max-width: 768px) {
+    .get-prediction-btn {
+        width: 80% !important;
+        max-width: 250px !important;
+        padding: 14px 20px !important;
+        font-size: 16px !important;
+    }
+}
+
+/* Prediction loader styles */
+.prediction-loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.prediction-loader .loader {
+    margin-bottom: 10px;
+}
+
+/* Mobile responsive prediction loader */
+@media (max-width: 768px) {
+    .prediction-loader {
+        padding: 15px;
+    }
+    
+    .prediction-loader p {
+        font-size: 13px !important;
+        text-align: center;
+    }
+}
+
 .chart-overlay {
   position: fixed;
   inset: 0;
@@ -118,48 +182,6 @@
     grid-template-columns: 1fr;
     gap: 10px;
     padding: 10px;
-  }
-  
-  /* 2-column grid for Price Summary and AI Prediction */
-  .price-summary-container,
-  .ai-prediction-container {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    grid-template-areas: 
-      "grid-header grid-header"
-      "col1 col2"
-      "col3 col3"
-      "grid-footer grid-footer" !important;
-    gap: 15px !important;
-    padding: 15px !important;
-  }
-  
-  .price-summary-container .grid-header,
-  .ai-prediction-container .grid-header {
-    grid-area: grid-header !important;
-    grid-column: 1 / -1 !important;
-  }
-  
-  .price-summary-container .col1,
-  .ai-prediction-container .col1 {
-    grid-area: col1 !important;
-  }
-  
-  .price-summary-container .col2,
-  .ai-prediction-container .col2 {
-    grid-area: col2 !important;
-  }
-  
-  .price-summary-container .col3,
-  .ai-prediction-container .col3 {
-    grid-area: col3 !important;
-    grid-column: 1 / -1 !important;
-  }
-  
-  .price-summary-container .grid-footer,
-  .ai-prediction-container .grid-footer {
-    grid-area: grid-footer !important;
-    grid-column: 1 / -1 !important;
   }
 }
 
@@ -321,55 +343,6 @@ padding: 5px;
 @media (max-width: 768px) {
   .recharts-responsive-container {
     height: 250px !important;
-    width: 90% !important;
-    margin: 0 auto !important;
-  }
-  
-  /* Center the main chart */
-  .min-h-screen .max-w-4xl .bg-white {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  /* Reduce font sizes for mobile */
-  .stock-symbol {
-    font-size: 0.9rem;
-  }
-  
-  .stock-price {
-    font-size: 1.8rem;
-  }
-  
-  .stock-change {
-    font-size: 0.9rem;
-  }
-  
-  .stock-period {
-    font-size: 0.9rem;
-  }
-  
-
-  
-  /* RSI and MACD charts mobile responsive */
-  .mt-4 .recharts-responsive-container {
-    width: 90% !important;
-    height: 200px !important;
-    margin: 0 auto !important;
-  }
-  
-  /* Reduce font sizes in stats */
-  .stats {
-    font-size: 0.85rem;
-  }
-  
-  .stats-elements {
-    font-size: 0.8rem;
-    padding: 6px;
-  }
-  
-  .grid-header h3 {
-    font-size: 1rem !important;
   }
 }
 

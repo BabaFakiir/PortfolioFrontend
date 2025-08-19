@@ -36,6 +36,8 @@ function StockHistoryChart() {
     const [showMACDChart, setShowMACDChart] = useState(false);
     
     const [loading, setLoading] = useState(true);
+    const [predictionLoading, setPredictionLoading] = useState(false);
+    const [predictionFetched, setPredictionFetched] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -74,37 +76,39 @@ function StockHistoryChart() {
                 setRSI(rsi);
             } catch (error) {
                 console.error("Error fetching stock price:", error);
-            }
-        };
-        const fetchPrediction = async () => {
-            try {
-                const response = await axios.get(`https://portfoliopythonapi.onrender.com/predict/${symbol}`);
-                const content = response.data;
-                // Handle prediction data if needed
-                const predicted_open = content.predicted_open.toFixed(2);
-                const predicted_high = content.predicted_high.toFixed(2);
-                const predicted_low = content.predicted_low.toFixed(2);
-                const predicted_close = content.predicted_close.toFixed(2);
-                const trend = content.trend;
-                const confidence = content.confidence.toFixed(4);
-                setPredictedOpen(predicted_open);
-                setPredictedHigh(predicted_high);
-                setPredictedLow(predicted_low);
-                setPredictedClose(predicted_close);
-                setTrend(trend);
-                setConfidence(confidence);
-            } catch (error) {
-                console.error("Error fetching stock prediction:", error);
             } finally {
-                setLoading(false); // stop loading once both are done
+                setLoading(false);
             }
         };
-        const fetchAll = async () => {
-            await fetchData();
-            await fetchPrediction();
-        };
-        fetchAll();
+        
+        fetchData();
     }, [symbol]);
+
+    const fetchPrediction = async () => {
+        try {
+            setPredictionLoading(true);
+            const response = await axios.get(`https://portfoliopythonapi.onrender.com/predict/${symbol}`);
+            const content = response.data;
+            // Handle prediction data if needed
+            const predicted_open = content.predicted_open.toFixed(2);
+            const predicted_high = content.predicted_high.toFixed(2);
+            const predicted_low = content.predicted_low.toFixed(2);
+            const predicted_close = content.predicted_close.toFixed(2);
+            const trend = content.trend;
+            const confidence = content.confidence.toFixed(4);
+            setPredictedOpen(predicted_open);
+            setPredictedHigh(predicted_high);
+            setPredictedLow(predicted_low);
+            setPredictedClose(predicted_close);
+            setTrend(trend);
+            setConfidence(confidence);
+            setPredictionFetched(true);
+        } catch (error) {
+            console.error("Error fetching stock prediction:", error);
+        } finally {
+            setPredictionLoading(false);
+        }
+    };
 
     if (loading) {
         return (
@@ -165,7 +169,7 @@ function StockHistoryChart() {
                         </LineChart>
                     </ResponsiveContainer>
                     <div className="mt-4">
-                        <div className='container price-summary-container'>
+                        <div className='container'>
                             <div className='grid-header'>
                                 <h3 className="text-lg font-semibold">Price Summary</h3>
                             </div>
@@ -260,31 +264,69 @@ function StockHistoryChart() {
                             </div>
                         </div>
                     </div>
-                    <div className="mt-4">
-                        <div className='container ai-prediction-container'>
-                            <div className='grid-header'>
-                                <h3 className="text-lg font-semibold">AI Price Prediction</h3>
+                    
+                    {/* Get AI Prediction Button */}
+                    <div className="mt-6 text-center">
+                        {!predictionFetched && !predictionLoading && (
+                            <button 
+                                onClick={fetchPrediction}
+                                className="get-prediction-btn"
+                                style={{
+                                    backgroundColor: 'transparent',
+                                    color: '#00C805',
+                                    padding: '12px 24px',
+                                    border: '2px solid #00C805',
+                                    borderRadius: '6px',
+                                    fontSize: '16px',
+                                    fontWeight: 'bold',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.3s ease',
+                                    width: '50%',
+                                    maxWidth: '300px',
+                                    margin: '0 auto',
+                                    display: 'block'
+                                }}
+                            >
+                                Get AI Prediction
+                            </button>
+                        )}
+                        
+                        {predictionLoading && (
+                            <div className="prediction-loader">
+                                <div className="loader" style={{ transform: 'scale(0.5)' }}></div>
+                                <p style={{ marginTop: '10px', color: '#00C805', fontSize: '14px' }}>Generating AI Prediction...</p>
                             </div>
-                            <div className='stats col1'>
-                                <ul className="stats list-disc list-inside">
-                                    <li className='stats-elements'>Predicted High: {predicted_high}</li>
-                                    <li className='stats-elements'>Predicted Low: {predicted_low}</li>
-                                </ul>
-                            </div>
-                            <div className='stats col2'>
-                                <ul className="list-disc list-inside">
-                                    <li className='stats-elements'>Predicted Open: {predicted_open}</li>
-                                    <li className='stats-elements'>Predicted Close: {predicted_close}</li>
-                                </ul>
-                            </div>
-                            <div className='stats col3'>
-                                <ul className="list-disc list-inside">
-                                    <li className='stats-elements'>Predicted Trend: {trend}</li>
-                                    <li className='stats-elements'>Confidence: {confidence}</li>
-                                </ul>
+                        )}
+                    </div>
+
+                    {/* AI Prediction Section */}
+                    {predictionFetched && !predictionLoading && (
+                        <div className="mt-4">
+                            <div className='container'>
+                                <div className='grid-header'>
+                                    <h3 className="text-lg font-semibold">AI Price Prediction</h3>
+                                </div>
+                                <div className='stats col1'>
+                                    <ul className="stats list-disc list-inside">
+                                        <li className='stats-elements'>Predicted High: {predicted_high}</li>
+                                        <li className='stats-elements'>Predicted Low: {predicted_low}</li>
+                                    </ul>
+                                </div>
+                                <div className='stats col2'>
+                                    <ul className="list-disc list-inside">
+                                        <li className='stats-elements'>Predicted Open: {predicted_open}</li>
+                                        <li className='stats-elements'>Predicted Close: {predicted_close}</li>
+                                    </ul>
+                                </div>
+                                <div className='stats col3'>
+                                    <ul className="list-disc list-inside">
+                                        <li className='stats-elements'>Predicted Trend: {trend}</li>
+                                        <li className='stats-elements'>Confidence: {confidence}</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    )}
                 </div>
             </div>
         </div>
