@@ -38,8 +38,8 @@ function StockInfo() {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                // const response = await axios.get(`https://portfoliopythonapi.onrender.com/stock-price/${symbol}`);
-                const response = await axios.get(`http://127.0.0.1:8000/stock-price/${symbol}`);
+                const response = await axios.get(`https://portfoliopythonapi.onrender.com/stock-price/${symbol}`);
+                // const response = await axios.get(`http://127.0.0.1:8000/stock-price/${symbol}`);
                 const content = response.data;
                 const chartData = content.data.map(item => ({
                     date: item.date,
@@ -234,9 +234,17 @@ function StockInfo() {
                                                     <Legend />
                                                     <Line type="monotone" dataKey="macd" stroke="#00C805" name="MACD" />
                                                     <Line type="monotone" dataKey="signal" stroke="#ff0000" name="Signal" />
-                                                    <Bar dataKey="histogram" fill="#00C805" name="Histogram" />
+                                                    <Bar dataKey="histogram" name="Histogram">
+                                                    {macdData.map((entry, index) => (
+                                                        <Cell
+                                                        key={`cell-${index}`}
+                                                        fill={entry.histogram >= 0 ? "#00C805" : "#ff0000"}
+                                                        />
+                                                    ))}
+                                                    </Bar>
                                                 </LineChart>
                                             </ResponsiveContainer>
+
                                         </div>
                                     )}
                                 </ul>
