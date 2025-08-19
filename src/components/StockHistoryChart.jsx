@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Legend } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Legend, Bar } from 'recharts';
 import axios from 'axios';
 import './componentcss/stockHistoryChart.css';
 import './componentcss/loadingSpinner.css';
@@ -32,6 +32,9 @@ function StockHistoryChart() {
     const [rsiData, setRsiData] = useState([]);
     const [showRSIChart, setShowRSIChart] = useState(false);
 
+    const [macdData, setMacdData] = useState([]);
+    const [showMACDChart, setShowMACDChart] = useState(false);
+    
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -48,6 +51,13 @@ function StockHistoryChart() {
                 }));
                 setData(chartData);
                 setRsiData(chartData.slice(-14));
+                const macdSeries = content.macd_data.map(item => ({
+                    date: item.date,
+                    macd: item.macd,
+                    signal: item.signal,
+                    histogram: item.histogram
+                }));
+                setMacdData(macdSeries);
                 const highestPrice = content.highest_price.toFixed(2);
                 const lowestPrice = content.lowest_price.toFixed(2);
                 const avgPrice = content.avg_price.toFixed(2);
@@ -205,6 +215,33 @@ function StockHistoryChart() {
                                                     <Legend />
                                                     <Line yAxisId="left" type="monotone" dataKey="price" stroke="#00C805" name="Price" />
                                                     <Line yAxisId="right" type="monotone" dataKey="rsi" stroke="#FF5733" name="RSI" />
+                                                </LineChart>
+                                            </ResponsiveContainer>
+                                        </div>
+                                    )}
+
+                                    {/* MACD Toggle */}
+                                    <li className='stats-elements mt-4'>
+                                        MACD{" "}
+                                        <button 
+                                            onClick={() => setShowMACDChart(!showMACDChart)} 
+                                            className="ml-2 text-blue-500 underline text-sm"
+                                        >
+                                            {showMACDChart ? "Hide Chart" : "Show Chart"}
+                                        </button>
+                                    </li>
+                                    {showMACDChart && (
+                                        <div className="mt-4">
+                                            <ResponsiveContainer width="90%" height={300} style={{ margin: '0 auto' }}>
+                                                <LineChart data={macdData}>
+                                                    <CartesianGrid stroke="#ccc" />
+                                                    <XAxis dataKey="date" />
+                                                    <YAxis />
+                                                    <Tooltip />
+                                                    <Legend />
+                                                    <Line type="monotone" dataKey="macd" stroke="#00C805" name="MACD" />
+                                                    <Line type="monotone" dataKey="signal" stroke="#ff0000" name="Signal" />
+                                                    <Bar dataKey="histogram" fill="#00C805" name="Histogram" />
                                                 </LineChart>
                                             </ResponsiveContainer>
                                         </div>

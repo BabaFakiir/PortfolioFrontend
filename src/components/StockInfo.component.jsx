@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Legend } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Legend, Bar } from 'recharts';
 import axios from 'axios';
 import './componentcss/stockHistoryChart.css';
 import './componentcss/loadingSpinner.css';
-
 
 function StockInfo() {
     const location = useLocation();
@@ -30,14 +29,17 @@ function StockInfo() {
     const [rsiData, setRsiData] = useState([]);
     const [showRSIChart, setShowRSIChart] = useState(false);
 
+    const [macdData, setMacdData] = useState([]);
+    const [showMACDChart, setShowMACDChart] = useState(false);
+
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get(`https://portfoliopythonapi.onrender.com/stock-price/${symbol}`);
-                
+                // const response = await axios.get(`https://portfoliopythonapi.onrender.com/stock-price/${symbol}`);
+                const response = await axios.get(`http://127.0.0.1:8000/stock-price/${symbol}`);
                 const content = response.data;
                 const chartData = content.data.map(item => ({
                     date: item.date,
@@ -46,13 +48,24 @@ function StockInfo() {
                 }));
                 setData(chartData);
                 setRsiData(chartData.slice(-14));
+
+                // ✅ Set MACD data
+                const macdSeries = content.macd_data.map(item => ({
+                    date: item.date,
+                    macd: item.macd,
+                    signal: item.signal,
+                    histogram: item.histogram
+                }));
+                setMacdData(macdSeries);
+
                 const highestPrice = content.highest_price.toFixed(2);
                 const lowestPrice = content.lowest_price.toFixed(2);
                 const avgPrice = content.avg_price.toFixed(2);
                 const latestPrice = content.latest_price.toFixed(2);
                 const priceChange = content.price_deviation.toFixed(2);
                 const priceChangePercent = content.price_deviation_percent.toFixed(2);
-                const rsi = content.rsi.toFixed(2);
+                const rsi = content.rsi ? content.rsi.toFixed(2) : null;
+
                 setHighestPrice(highestPrice);
                 setLowestPrice(lowestPrice);
                 setAvgPrice(avgPrice);
@@ -68,7 +81,6 @@ function StockInfo() {
             try {
                 const response = await axios.get(`https://portfoliopythonapi.onrender.com/predict/${symbol}`);
                 const content = response.data;
-                // Handle prediction data if needed
                 const predicted_open = content.predicted_open.toFixed(2);
                 const predicted_high = content.predicted_high.toFixed(2);
                 const predicted_low = content.predicted_low.toFixed(2);
@@ -84,7 +96,7 @@ function StockInfo() {
             } catch (error) {
                 console.error("Error fetching stock prediction:", error);
             } finally {
-                setLoading(false); // stop loading once both are done
+                setLoading(false);
             }
         };
         const fetchAll = async () => {
@@ -95,10 +107,7 @@ function StockInfo() {
     }, [symbol]);
 
     if (loading) {
-        return (
-            <div className="loader">
-            </div>
-        );
+        return <div className="loader"></div>;
     }
 
     return (
@@ -116,6 +125,8 @@ function StockInfo() {
                         </div>
                         <div className="stock-period">Past month</div>
                     </div>
+
+                    {/* Main Price Chart */}
                     <ResponsiveContainer width="90%" height={350} style={{ margin: '0 auto' }}>
                         <LineChart data={data}>
                             <YAxis
@@ -152,6 +163,8 @@ function StockInfo() {
                             />
                         </LineChart>
                     </ResponsiveContainer>
+
+                    {/* Stats */}
                     <div className="mt-4">
                         <div className='container'>
                             <div className='grid-header'>
@@ -173,6 +186,7 @@ function StockInfo() {
                             </div>
                             <div className='stats grid-footer'>
                                 <ul className="list-disc list-inside">
+                                    {/* RSI Toggle */}
                                     <li className='stats-elements'>
                                         14 Day RSI: {rsi}{" "}
                                         <button 
@@ -182,14 +196,13 @@ function StockInfo() {
                                             {showRSIChart ? "Hide Chart" : "Show Chart"}
                                         </button>
                                     </li>
-
                                     {showRSIChart && (
                                         <div className="mt-4">
                                             <ResponsiveContainer width="90%" height={300} style={{ margin: '0 auto' }}>
                                                 <LineChart data={rsiData}>
                                                     <CartesianGrid stroke="#ccc" />
                                                     <XAxis dataKey="date" />
-                                                    <YAxis yAxisId="left" stroke="#00C805" tickFormatter={(val) => `$${val}`} />
+                                                    <YAxis yAxisId="left" stroke="#00C805" />
                                                     <YAxis yAxisId="right" orientation="right" stroke="#FF5733" domain={[0, 100]} />
                                                     <Tooltip />
                                                     <Legend />
@@ -200,14 +213,42 @@ function StockInfo() {
                                         </div>
                                     )}
 
+                                    {/* MACD Toggle */}
+                                    <li className='stats-elements mt-4'>
+                                        MACD{" "}
+                                        <button 
+                                            onClick={() => setShowMACDChart(!showMACDChart)} 
+                                            className="ml-2 text-blue-500 underline text-sm"
+                                        >
+                                            {showMACDChart ? "Hide Chart" : "Show Chart"}
+                                        </button>
+                                    </li>
+                                    {showMACDChart && (
+                                        <div className="mt-4">
+                                            <ResponsiveContainer width="90%" height={300} style={{ margin: '0 auto' }}>
+                                                <LineChart data={macdData}>
+                                                    <CartesianGrid stroke="#ccc" />
+                                                    <XAxis dataKey="date" />
+                                                    <YAxis />
+                                                    <Tooltip />
+                                                    <Legend />
+                                                    <Line type="monotone" dataKey="macd" stroke="#00C805" name="MACD" />
+                                                    <Line type="monotone" dataKey="signal" stroke="#ff0000" name="Signal" />
+                                                    <Bar dataKey="histogram" fill="#00C805" name="Histogram" />
+                                                </LineChart>
+                                            </ResponsiveContainer>
+                                        </div>
+                                    )}
                                 </ul>
                             </div>
                         </div>
                     </div>
+
+                    {/* Prediction */}
                     <div className="mt-4">
                         <div className='container'>
                             <div className='grid-header'>
-                                <h3 className="text-lg font-semibold">Price Prediction</h3>
+                                <h3 className="text-lg font-semibold">AI Price Prediction</h3>
                             </div>
                             <div className='stats col1'>
                                 <ul className="stats list-disc list-inside">
@@ -229,6 +270,7 @@ function StockInfo() {
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
