@@ -187,11 +187,12 @@ function StockInfo() {
                             <div className='stats grid-footer'>
                                 <ul className="list-disc list-inside">
                                     {/* RSI Toggle */}
-                                    <li className='stats-elements'>
+                                    <li className='stats-elements' style={{color: "white"}}>
                                         14 Day RSI: {rsi}{" "}
                                         <button 
                                             onClick={() => setShowRSIChart(!showRSIChart)} 
                                             className="ml-2 text-blue-500 underline text-sm"
+                                            style={{cursor: "pointer", color: "#00C805"}}
                                         >
                                             {showRSIChart ? '▲' : '▼'}
                                         </button>
@@ -214,11 +215,12 @@ function StockInfo() {
                                     )}
 
                                     {/* MACD Toggle */}
-                                    <li className='stats-elements mt-4'>
+                                    <li className='stats-elements mt-4' style={{color: "white"}}>
                                         MACD{" "}
                                         <button 
                                             onClick={() => setShowMACDChart(!showMACDChart)} 
                                             className="ml-2 text-blue-500 underline text-sm"
+                                            style={{cursor: "pointer", color: "#00C805"}}
                                         >
                                             {showMACDChart ? '▲' : '▼'}
                                         </button>

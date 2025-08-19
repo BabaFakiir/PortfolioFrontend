@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Legend, Bar } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Legend, Bar, Cell } from 'recharts';
 import axios from 'axios';
 import './componentcss/stockHistoryChart.css';
 import './componentcss/loadingSpinner.css';
@@ -193,13 +193,14 @@ function StockHistoryChart() {
                             <div className='stats grid-footer'>
                                 <ul className="list-disc list-inside">
                                     <li className='stats-elements'>Total realised Gain/Loss: {((latestPrice - avgPurchasePrice) * shares).toFixed(2)}</li>
-                                    <li className='stats-elements'>
+                                    <li className='stats-elements' style={{color: "white"}}>
                                         14 Day RSI: {rsi}{" "}
                                         <button 
                                             onClick={() => setShowRSIChart(!showRSIChart)} 
                                             className="ml-2 text-blue-500 underline text-sm"
+                                            style={{cursor: "pointer", color: "#00C805"}}
                                         >
-                                            {showRSIChart ? "Hide Chart" : "Show Chart"}
+                                            {showRSIChart ? '▲' : '▼'}
                                         </button>
                                     </li>
 
@@ -221,13 +222,14 @@ function StockHistoryChart() {
                                     )}
 
                                     {/* MACD Toggle */}
-                                    <li className='stats-elements mt-4'>
+                                    <li className='stats-elements mt-4' style={{color: "white"}}>
                                         MACD{" "}
                                         <button 
                                             onClick={() => setShowMACDChart(!showMACDChart)} 
                                             className="ml-2 text-blue-500 underline text-sm"
+                                            style={{cursor: "pointer", color: "#00C805"}}
                                         >
-                                            {showMACDChart ? "Hide Chart" : "Show Chart"}
+                                            {showMACDChart ? '▲' : '▼'}
                                         </button>
                                     </li>
                                     {showMACDChart && (
@@ -241,9 +243,17 @@ function StockHistoryChart() {
                                                     <Legend />
                                                     <Line type="monotone" dataKey="macd" stroke="#00C805" name="MACD" />
                                                     <Line type="monotone" dataKey="signal" stroke="#ff0000" name="Signal" />
-                                                    <Bar dataKey="histogram" fill="#00C805" name="Histogram" />
+                                                    <Bar dataKey="histogram" name="Histogram">
+                                                    {macdData.map((entry, index) => (
+                                                        <Cell
+                                                        key={`cell-${index}`}
+                                                        fill={entry.histogram >= 0 ? "#00C805" : "#ff0000"}
+                                                        />
+                                                    ))}
+                                                    </Bar>
                                                 </LineChart>
                                             </ResponsiveContainer>
+
                                         </div>
                                     )}
                                 </ul>
