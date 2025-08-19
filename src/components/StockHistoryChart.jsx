@@ -165,7 +165,7 @@ function StockHistoryChart() {
                         </LineChart>
                     </ResponsiveContainer>
                     <div className="mt-4">
-                        <div className='container'>
+                        <div className='container price-summary-container'>
                             <div className='grid-header'>
                                 <h3 className="text-lg font-semibold">Price Summary</h3>
                             </div>
@@ -261,7 +261,7 @@ function StockHistoryChart() {
                         </div>
                     </div>
                     <div className="mt-4">
-                        <div className='container'>
+                        <div className='container ai-prediction-container'>
                             <div className='grid-header'>
                                 <h3 className="text-lg font-semibold">AI Price Prediction</h3>
                             </div>

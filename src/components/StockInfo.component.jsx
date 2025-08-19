@@ -127,7 +127,7 @@ function StockInfo() {
                     </div>
 
                     {/* Main Price Chart */}
-                    <ResponsiveContainer width="90%" height={350} style={{ margin: '0 auto' }}>
+                    <ResponsiveContainer width="90%" height={window.innerWidth <= 768 ? 250 : 350} style={{ margin: '0 auto' }}>
                         <LineChart data={data}>
                             <YAxis
                                 domain={[
@@ -166,7 +166,7 @@ function StockInfo() {
 
                     {/* Stats */}
                     <div className="mt-4">
-                        <div className='container'>
+                        <div className='container price-summary-container'>
                             <div className='grid-header'>
                                 <h3 className="text-lg font-semibold">Price Summary</h3>
                             </div>
@@ -199,7 +199,7 @@ function StockInfo() {
                                     </li>
                                     {showRSIChart && (
                                         <div className="mt-4">
-                                            <ResponsiveContainer width="90%" height={300} style={{ margin: '0 auto' }}>
+                                            <ResponsiveContainer width="90%" height={window.innerWidth <= 768 ? 200 : 300} style={{ margin: '0 auto' }}>
                                                 <LineChart data={rsiData}>
                                                     <CartesianGrid stroke="#ccc" />
                                                     <XAxis dataKey="date" />
@@ -227,7 +227,7 @@ function StockInfo() {
                                     </li>
                                     {showMACDChart && (
                                         <div className="mt-4">
-                                            <ResponsiveContainer width="90%" height={300} style={{ margin: '0 auto' }}>
+                                            <ResponsiveContainer width="90%" height={window.innerWidth <= 768 ? 200 : 300} style={{ margin: '0 auto' }}>
                                                 <LineChart data={macdData}>
                                                     <CartesianGrid stroke="#ccc" />
                                                     <XAxis dataKey="date" />
@@ -256,7 +256,7 @@ function StockInfo() {
 
                     {/* Prediction */}
                     <div className="mt-4">
-                        <div className='container'>
+                        <div className='container ai-prediction-container'>
                             <div className='grid-header'>
                                 <h3 className="text-lg font-semibold">AI Price Prediction</h3>
                             </div>
