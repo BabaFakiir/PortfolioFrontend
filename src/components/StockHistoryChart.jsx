@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Legend } from 'recharts';
 import axios from 'axios';
 import './componentcss/stockHistoryChart.css';
 import './componentcss/loadingSpinner.css';
@@ -27,6 +27,10 @@ function StockHistoryChart() {
     const [predicted_close, setPredictedClose] = useState(null);
     const [trend, setTrend] = useState(null);
     const [confidence, setConfidence] = useState(null);
+    const [rsi, setRSI] = useState(null);
+
+    const [rsiData, setRsiData] = useState([]);
+    const [showRSIChart, setShowRSIChart] = useState(false);
 
     const [loading, setLoading] = useState(true);
 
@@ -35,25 +39,29 @@ function StockHistoryChart() {
             try {
                 setLoading(true);
                 const response = await axios.get(`https://portfoliopythonapi.onrender.com/stock-price/${symbol}`);
+                
                 const content = response.data;
                 const chartData = content.data.map(item => ({
                     date: item.date,
                     price: item.avg_price,
-                    avgPurchasePrice: avgPurchasePrice
+                    rsi: item.rsi
                 }));
                 setData(chartData);
+                setRsiData(chartData.slice(-14));
                 const highestPrice = content.highest_price.toFixed(2);
                 const lowestPrice = content.lowest_price.toFixed(2);
                 const avgPrice = content.avg_price.toFixed(2);
                 const latestPrice = content.latest_price.toFixed(2);
                 const priceChange = content.price_deviation.toFixed(2);
                 const priceChangePercent = content.price_deviation_percent.toFixed(2);
+                const rsi = content.rsi.toFixed(2);
                 setHighestPrice(highestPrice);
                 setLowestPrice(lowestPrice);
                 setAvgPrice(avgPrice);
                 setLatestPrice(latestPrice);
                 setPriceChange(priceChange);
                 setPriceChangePercent(priceChangePercent);
+                setRSI(rsi);
             } catch (error) {
                 console.error("Error fetching stock price:", error);
             }
@@ -175,6 +183,32 @@ function StockHistoryChart() {
                             <div className='stats grid-footer'>
                                 <ul className="list-disc list-inside">
                                     <li className='stats-elements'>Total realised Gain/Loss: {((latestPrice - avgPurchasePrice) * shares).toFixed(2)}</li>
+                                    <li className='stats-elements'>
+                                        14 Day RSI: {rsi}{" "}
+                                        <button 
+                                            onClick={() => setShowRSIChart(!showRSIChart)} 
+                                            className="ml-2 text-blue-500 underline text-sm"
+                                        >
+                                            {showRSIChart ? "Hide Chart" : "Show Chart"}
+                                        </button>
+                                    </li>
+
+                                    {showRSIChart && (
+                                        <div className="mt-4">
+                                            <ResponsiveContainer width="90%" height={300} style={{ margin: '0 auto' }}>
+                                                <LineChart data={rsiData}>
+                                                    <CartesianGrid stroke="#ccc" />
+                                                    <XAxis dataKey="date" />
+                                                    <YAxis yAxisId="left" stroke="#00C805" tickFormatter={(val) => `$${val}`} />
+                                                    <YAxis yAxisId="right" orientation="right" stroke="#FF5733" domain={[0, 100]} />
+                                                    <Tooltip />
+                                                    <Legend />
+                                                    <Line yAxisId="left" type="monotone" dataKey="price" stroke="#00C805" name="Price" />
+                                                    <Line yAxisId="right" type="monotone" dataKey="rsi" stroke="#FF5733" name="RSI" />
+                                                </LineChart>
+                                            </ResponsiveContainer>
+                                        </div>
+                                    )}
                                 </ul>
                             </div>
                         </div>
@@ -182,7 +216,7 @@ function StockHistoryChart() {
                     <div className="mt-4">
                         <div className='container'>
                             <div className='grid-header'>
-                                <h3 className="text-lg font-semibold">Price Prediction</h3>
+                                <h3 className="text-lg font-semibold">AI Price Prediction</h3>
                             </div>
                             <div className='stats col1'>
                                 <ul className="stats list-disc list-inside">
