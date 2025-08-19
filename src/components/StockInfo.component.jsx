@@ -193,7 +193,7 @@ function StockInfo() {
                                             onClick={() => setShowRSIChart(!showRSIChart)} 
                                             className="ml-2 text-blue-500 underline text-sm"
                                         >
-                                            {showRSIChart ? "Hide Chart" : "Show Chart"}
+                                            {showRSIChart ? '▲' : '▼'}
                                         </button>
                                     </li>
                                     {showRSIChart && (
@@ -220,7 +220,7 @@ function StockInfo() {
                                             onClick={() => setShowMACDChart(!showMACDChart)} 
                                             className="ml-2 text-blue-500 underline text-sm"
                                         >
-                                            {showMACDChart ? "Hide Chart" : "Show Chart"}
+                                            {showMACDChart ? '▲' : '▼'}
                                         </button>
                                     </li>
                                     {showMACDChart && (
